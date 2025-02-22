@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.Duration;
 
 public abstract class BaseTest {
@@ -20,10 +22,12 @@ public abstract class BaseTest {
         UserCreation.createUser();
     }
 
+
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws IOException {
+        var userDataDir = Files.createTempDirectory("chrome-profile-");
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--user-data-dir=/tmp/chrome-profile-" + System.currentTimeMillis());
+        options.addArguments("--user-data-dir=" + userDataDir.toAbsolutePath().toString());
         driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().window().maximize();
