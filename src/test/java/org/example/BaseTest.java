@@ -24,7 +24,7 @@ public abstract class BaseTest {
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--user-data-dir=/tmp/chrome-profile-" + System.currentTimeMillis());
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().window().maximize();
     }
