@@ -23,11 +23,25 @@ public abstract class BaseTest {
     }
 
 
+//    @BeforeEach
+//    public void setUp() throws IOException {
+//        var userDataDir = Files.createTempDirectory("chrome-profile-");
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--user-data-dir=" + userDataDir.toAbsolutePath().toString());
+//        driver = new ChromeDriver(options);
+//        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        driver.manage().window().maximize();
+//    }
+
     @BeforeEach
     public void setUp() throws IOException {
         var userDataDir = Files.createTempDirectory("chrome-profile-");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--user-data-dir=" + userDataDir.toAbsolutePath().toString());
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--remote-debugging-port=9222");
+        options.addArguments("--headless"); // Optional: Use headless mode for CI environments
         driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().window().maximize();
