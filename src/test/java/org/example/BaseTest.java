@@ -35,14 +35,7 @@ public abstract class BaseTest {
 
     @BeforeEach
     public void setUp() throws IOException {
-        var userDataDir = Files.createTempDirectory("chrome-profile-" + System.currentTimeMillis() + "-");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--user-data-dir=" + userDataDir.toAbsolutePath().toString());
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--remote-debugging-port=9222");
-        options.addArguments("--headless");
-        driver = new ChromeDriver(options);
+        driver = new ChromeDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().window().maximize();
     }
