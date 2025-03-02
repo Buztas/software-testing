@@ -1,5 +1,6 @@
 package org.example;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
@@ -18,8 +19,8 @@ public class Lab3Test extends BaseTest {
         driver.get("https://demowebshop.tricentis.com/");
 
         driver.findElement(By.xpath("//a[@href='/login']")).click();
-        driver.findElement(By.xpath("//*[@id=\"Email\"]")).sendKeys("john.silverhand@gmail.com");
-        driver.findElement(By.xpath("//*[@id=\"Password\"]")).sendKeys("123456");
+        driver.findElement(By.xpath("//*[@id=\"Email\"]")).sendKeys(username);
+        driver.findElement(By.xpath("//*[@id=\"Password\"]")).sendKeys(password);
         driver.findElement(By.xpath("//input[@class='button-1 login-button']")).click();
 
         driver.findElement(By.xpath("//a[contains(text(), 'Digital downloads')]")).click();
@@ -38,7 +39,7 @@ public class Lab3Test extends BaseTest {
         driver.findElement(By.xpath("//input[@id='termsofservice']")).click();
         driver.findElement(By.xpath("//button[@id='checkout']")).click();
 
-        if (!driver.findElement(By.xpath("//*[@id=\"billing-buttons-container\"]/input")).isDisplayed()) {
+        if (driver.findElement(By.xpath("//input[@id='BillingNewAddress_FirstName']")).isDisplayed()) {
             driver.findElement(By.xpath("//*[@id=\"BillingNewAddress_City\"]")).sendKeys("Some city");
             driver.findElement(By.xpath("//*[@id=\"BillingNewAddress_Address1\"]")).sendKeys("Some street");
             driver.findElement(By.xpath("//*[@id=\"BillingNewAddress_ZipPostalCode\"]")).sendKeys("12345");
@@ -52,8 +53,8 @@ public class Lab3Test extends BaseTest {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"payment-info-buttons-container\"]/input"))).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"confirm-order-buttons-container\"]/input"))).click();
 
+        var text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='title']/strong"))).getText();
+        Assertions.assertEquals("Your order has been successfully processed!", text);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@class='button-2 order-completed-continue-button']"))).click();
-
-        driver.quit();
     }
 }
