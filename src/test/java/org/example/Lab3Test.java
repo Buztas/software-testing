@@ -36,7 +36,7 @@ public class Lab3Test extends BaseTest {
         }
 
         driver.findElement(By.xpath("//a[text()='Shopping cart']")).click();
-        driver.findElement(By.xpath("//input[@id='termsofservice']")).click();
+        driver.findElement(By.xpath("//*[@id=\"termsofservice\"]")).click();
         driver.findElement(By.xpath("//button[@id='checkout']")).click();
 
         if (driver.findElement(By.xpath("//input[@id='BillingNewAddress_FirstName']")).isDisplayed()) {
